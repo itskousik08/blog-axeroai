@@ -1,0 +1,401 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import FAQ from '../components/FAQ.jsx';
+
+const sections = [
+  {
+    label: 'Getting Started',
+    title: 'Up and running in minutes',
+    body: `The AXEROAI API is designed to be intuitive from the first request. Authenticate with your API key, 
+pick a model, and send your first message. Our SDK handles retries, streaming, and rate limits automatically.`,
+    code: `curl https://api.axeroai.com/v1/messages \\
+  -H "x-api-key: $AXEROAI_API_KEY" \\
+  -d '{
+    "model": "axero-3-opus",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Hello, AXEROAI!"}]
+  }'`,
+  },
+];
+
+const features = [
+  {
+    icon: '⚡',
+    title: 'Streaming responses',
+    description: 'Stream tokens in real time for responsive UIs using server-sent events or our SDK helpers.',
+    badge: 'Core',
+  },
+  {
+    icon: '🛠',
+    title: 'Tool use / Function calling',
+    description: 'Give your model the ability to call external functions and APIs in a structured, safe way.',
+    badge: 'Core',
+  },
+  {
+    icon: '👁',
+    title: 'Vision & multimodal',
+    description: 'Send images alongside text — analyze charts, screenshots, diagrams, and more.',
+    badge: 'Beta',
+  },
+  {
+    icon: '📄',
+    title: '200K context window',
+    description: 'Process entire codebases, books, or long legal documents in a single prompt with Axero Opus.',
+    badge: 'Opus',
+  },
+  {
+    icon: '🔐',
+    title: 'Constitutional AI',
+    description: 'Our models are trained with Constitutional AI to be helpful, harmless, and honest by design.',
+    badge: 'Safety',
+  },
+  {
+    icon: '🌍',
+    title: 'Multilingual',
+    description: 'Perform natively in 30+ languages with no prompt engineering required.',
+    badge: 'Core',
+  },
+];
+
+const models = [
+  {
+    name: 'Axero 3 Opus',
+    id: 'axero-3-opus',
+    description: 'Most capable model. Ideal for complex reasoning, long documents, and sophisticated tasks.',
+    context: '200K',
+    speed: 'Moderate',
+    use: 'Research · Analysis · Complex tasks',
+  },
+  {
+    name: 'Axero 3 Sonnet',
+    id: 'axero-3-sonnet',
+    description: 'Best balance of intelligence and speed. Great for most production workloads.',
+    context: '200K',
+    speed: 'Fast',
+    use: 'Products · Coding · Customer support',
+  },
+  {
+    name: 'Axero 3 Haiku',
+    id: 'axero-3-haiku',
+    description: 'Fastest and most compact model. Optimized for high-volume, low-latency applications.',
+    context: '48K',
+    speed: 'Very fast',
+    use: 'Classification · Summarization · Chat',
+  },
+];
+
+const docsNavItems = [
+  { label: 'Overview', href: '#overview', active: true },
+  { label: 'Models', href: '#models' },
+  { label: 'Features', href: '#features' },
+  { label: 'Getting Started', href: '#quickstart' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'FAQ', href: '#faq' },
+];
+---
+
+<MainLayout
+  title="Docs & Blocks"
+  description="Explore AXEROAI's API capabilities, model documentation, feature blocks, and integration guides."
+>
+  <!-- Page header -->
+  <section class="pt-32 pb-10 border-b border-card-border" aria-labelledby="docs-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center gap-2 text-xs text-text-muted mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-text-secondary transition-colors">Home</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-text-primary" aria-current="page">Docs</span>
+      </nav>
+      <div class="max-w-2xl">
+        <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">
+          Documentation
+        </span>
+        <h1 id="docs-heading" class="font-display font-extrabold text-4xl sm:text-5xl text-text-primary leading-tight mb-4">
+          Build with confidence
+        </h1>
+        <p class="text-lg text-text-secondary leading-relaxed">
+          Everything you need to integrate, deploy, and scale with the AXEROAI API —
+          from quickstart guides to advanced configuration.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick nav tabs -->
+  <div class="sticky top-16 z-40 bg-background/90 backdrop-blur-xl border-b border-card-border" role="navigation" aria-label="Section navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-0 overflow-x-auto scrollbar-hide py-0" role="tablist">
+        {docsNavItems.map((item) => (
+          <a
+            href={item.href}
+            role="tab"
+            aria-selected={item.active}
+            class={`flex-shrink-0 px-4 py-3.5 text-sm border-b-2 transition-colors ${
+              item.active
+                ? 'border-brand text-text-primary font-medium'
+                : 'border-transparent text-text-muted hover:text-text-secondary'
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+
+    <!-- ── OVERVIEW ── -->
+    <section id="overview" aria-labelledby="overview-heading" class="scroll-mt-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">Overview</span>
+          <h2 id="overview-heading" class="font-display font-bold text-3xl sm:text-4xl text-text-primary mb-4">
+            A simple, powerful API
+          </h2>
+          <p class="text-text-secondary leading-relaxed mb-4">
+            AXEROAI's API gives you access to frontier AI models through a clean, well-documented interface.
+            Whether you're building a customer-facing product, an internal tool, or a research prototype,
+            the same API serves every use case.
+          </p>
+          <p class="text-text-secondary leading-relaxed mb-6">
+            Our models are designed to be safe by default. Constitutional AI training means they refuse harmful
+            requests without complex system prompts, and they're honest about uncertainty.
+          </p>
+          <div class="flex gap-3">
+            <a href="#quickstart" class="px-5 py-2.5 text-sm bg-brand hover:bg-brand-hover text-white rounded-xl transition-colors font-medium">
+              Quick start
+            </a>
+            <a href="#models" class="px-5 py-2.5 text-sm border border-card-border hover:border-text-muted text-text-secondary hover:text-text-primary rounded-xl transition-colors">
+              View models
+            </a>
+          </div>
+        </div>
+
+        <!-- Code block -->
+        <div class="bg-card border border-card-border rounded-2xl overflow-hidden">
+          <div class="flex items-center justify-between px-4 py-3 border-b border-card-border bg-background">
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-error/50"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/50"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-success/50"></div>
+            </div>
+            <span class="text-xs text-text-muted font-mono">example.py</span>
+          </div>
+          <pre class="p-5 text-xs leading-relaxed overflow-x-auto text-text-secondary font-mono"><code><span class="text-brand">import</span> axeroai
+
+client = axeroai.<span class="text-success">Client</span>()
+
+message = client.messages.<span class="text-[#F59E0B]">create</span>(
+    model=<span class="text-text-primary">"axero-3-opus"</span>,
+    max_tokens=<span class="text-text-primary">1024</span>,
+    messages=[
+        {<span class="text-text-primary">"role"</span>: <span class="text-text-primary">"user"</span>, <span class="text-text-primary">"content"</span>: <span class="text-text-primary">"Explain AI safety."</span>}
+    ]
+)
+
+<span class="text-brand">print</span>(message.content[<span class="text-text-primary">0</span>].text)</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MODELS ── -->
+    <section id="models" aria-labelledby="models-heading" class="scroll-mt-32">
+      <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">Models</span>
+      <h2 id="models-heading" class="font-display font-bold text-3xl text-text-primary mb-8">
+        Choose the right model
+      </h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {models.map((m, i) => (
+          <div class={`bg-card border rounded-xl p-6 ${i === 0 ? 'border-brand/40' : 'border-card-border'}`}>
+            {i === 0 && (
+              <div class="mb-3">
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-brand text-white">
+                  Most powerful
+                </span>
+              </div>
+            )}
+            <h3 class="font-display font-semibold text-text-primary text-lg mb-1">{m.name}</h3>
+            <p class="text-xs text-text-muted font-mono mb-3">{m.id}</p>
+            <p class="text-sm text-text-secondary leading-relaxed mb-4">{m.description}</p>
+            <div class="space-y-1.5 text-xs">
+              <div class="flex gap-2">
+                <span class="text-text-muted w-16 flex-shrink-0">Context</span>
+                <span class="text-text-primary font-medium">{m.context}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="text-text-muted w-16 flex-shrink-0">Speed</span>
+                <span class="text-text-primary font-medium">{m.speed}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="text-text-muted w-16 flex-shrink-0">Best for</span>
+                <span class="text-text-primary">{m.use}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section id="features" aria-labelledby="features-heading" class="scroll-mt-32">
+      <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">Features</span>
+      <h2 id="features-heading" class="font-display font-bold text-3xl text-text-primary mb-8">
+        Everything you need to build
+      </h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {features.map((f) => (
+          <div class="bg-card border border-card-border rounded-xl p-5 hover:border-brand/30 transition-colors">
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-2xl" aria-hidden="true">{f.icon}</span>
+              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-brand/10 text-brand border border-brand/20">
+                {f.badge}
+              </span>
+            </div>
+            <h3 class="font-display font-semibold text-text-primary mb-2">{f.title}</h3>
+            <p class="text-sm text-text-muted leading-relaxed">{f.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── QUICK START ── -->
+    <section id="quickstart" aria-labelledby="quickstart-heading" class="scroll-mt-32">
+      <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">Quick Start</span>
+      <h2 id="quickstart-heading" class="font-display font-bold text-3xl text-text-primary mb-8">
+        Up and running in minutes
+      </h2>
+
+      <div class="space-y-6">
+        {[
+          {
+            step: '01',
+            title: 'Install the SDK',
+            code: 'pip install axeroai\n# or\nnpm install @axeroai/sdk',
+            lang: 'bash',
+          },
+          {
+            step: '02',
+            title: 'Set your API key',
+            code: 'export AXEROAI_API_KEY="your-api-key-here"',
+            lang: 'bash',
+          },
+          {
+            step: '03',
+            title: 'Send your first message',
+            code: `import axeroai
+
+client = axeroai.Client()
+response = client.messages.create(
+    model="axero-3-sonnet",
+    max_tokens=512,
+    messages=[
+        {"role": "user", "content": "What is constitutional AI?"}
+    ]
+)
+print(response.content[0].text)`,
+            lang: 'python',
+          },
+        ].map((step) => (
+          <div class="grid lg:grid-cols-5 gap-4 items-start">
+            <div class="lg:col-span-2">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-xs font-mono text-text-muted">{step.step}</span>
+                <h3 class="font-display font-semibold text-text-primary">{step.title}</h3>
+              </div>
+            </div>
+            <div class="lg:col-span-3">
+              <div class="bg-card border border-card-border rounded-xl overflow-hidden">
+                <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-card-border bg-background">
+                  <div class="w-2 h-2 rounded-full bg-card-border"></div>
+                  <div class="w-2 h-2 rounded-full bg-card-border"></div>
+                  <div class="w-2 h-2 rounded-full bg-card-border"></div>
+                  <span class="ml-auto text-xs text-text-muted font-mono">{step.lang}</span>
+                </div>
+                <pre class="p-4 text-xs leading-relaxed overflow-x-auto text-text-secondary font-mono whitespace-pre-wrap">{step.code}</pre>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── PRICING ── -->
+    <section id="pricing" aria-labelledby="pricing-heading" class="scroll-mt-32">
+      <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">Pricing</span>
+      <h2 id="pricing-heading" class="font-display font-bold text-3xl text-text-primary mb-8">
+        Simple, usage-based pricing
+      </h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        {[
+          {
+            plan: 'Free',
+            price: '$0',
+            period: '/month',
+            features: ['5M tokens/month', 'Rate limited', 'Community support', 'All models'],
+            cta: 'Get started',
+            highlight: false,
+          },
+          {
+            plan: 'Pro',
+            price: '$20',
+            period: '/month',
+            features: ['100M tokens/month', 'Priority processing', 'Email support', 'All models + beta'],
+            cta: 'Start free trial',
+            highlight: true,
+          },
+          {
+            plan: 'Enterprise',
+            price: 'Custom',
+            period: '',
+            features: ['Unlimited tokens', 'Dedicated infrastructure', 'SLA + 24/7 support', 'Custom fine-tuning'],
+            cta: 'Contact sales',
+            highlight: false,
+          },
+        ].map((tier) => (
+          <div class={`rounded-xl border p-6 flex flex-col ${tier.highlight ? 'border-brand/50 bg-brand/5' : 'border-card-border bg-card'}`}>
+            <div class="mb-5">
+              <p class="text-sm text-text-muted mb-1">{tier.plan}</p>
+              <div class="flex items-baseline gap-1">
+                <span class="font-display font-bold text-3xl text-text-primary">{tier.price}</span>
+                {tier.period && <span class="text-sm text-text-muted">{tier.period}</span>}
+              </div>
+            </div>
+            <ul class="space-y-2.5 mb-6 flex-1">
+              {tier.features.map((f) => (
+                <li class="flex items-center gap-2 text-sm text-text-secondary">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" aria-hidden="true">
+                    <path d="M20 6L9 17l-5-5" strokeLinecap="round"/>
+                  </svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#"
+              class={`block text-center py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                tier.highlight
+                  ? 'bg-brand hover:bg-brand-hover text-white'
+                  : 'border border-card-border hover:border-text-muted text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              {tier.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section id="faq" aria-labelledby="docs-faq-heading" class="scroll-mt-32">
+      <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">FAQ</span>
+      <h2 id="docs-faq-heading" class="font-display font-bold text-3xl text-text-primary mb-8">
+        Frequently asked questions
+      </h2>
+      <div class="max-w-2xl">
+        <FAQ client:load />
+      </div>
+    </section>
+
+  </div>
+</MainLayout>

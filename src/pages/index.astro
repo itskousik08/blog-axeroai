@@ -1,124 +1,432 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import FeatureCards from '../components/FeatureCards.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import FAQ from '../components/FAQ.jsx';
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+const releases = [
+  {
+    title: 'Axero 3 Opus — Our most capable model yet',
+    description:
+      'Introducing Axero 3 Opus: 200K context window, advanced multi-step reasoning, and state-of-the-art performance across benchmarks.',
+    date: 'Mar 2025',
+    category: 'Model Release',
+    href: '/news',
+  },
+  {
+    title: 'Responsible Scaling Policy v2.0',
+    description:
+      'Updated guidelines defining how we assess capabilities and enforce safety mitigations before deploying increasingly powerful AI systems.',
+    date: 'Feb 2025',
+    category: 'Safety',
+    href: '/news',
+  },
+  {
+    title: 'AXEROAI API — Generally Available',
+    description:
+      'The full API suite is now GA: function calling, vision, streaming, tool use, and 99.9% uptime SLA for production workloads.',
+    date: 'Jan 2025',
+    category: 'Platform',
+    href: '/blog',
+  },
+];
+
+const values = [
+  {
+    title: 'AI Safety',
+    description:
+      'We invest heavily in alignment research and red-teaming to ensure our models behave as intended — even in adversarial conditions.',
+    icon: 'shield',
+  },
+  {
+    title: 'Responsible Scaling',
+    description:
+      'Our Responsible Scaling Policy defines clear capability thresholds and required safety measures before any deployment.',
+    icon: 'scale',
+  },
+  {
+    title: 'Alignment Research',
+    description:
+      'We publish cutting-edge research on making AI systems reliably aligned with human intentions and societal values.',
+    icon: 'target',
+  },
+  {
+    title: 'Education & Innovation',
+    description:
+      'We share our research openly to accelerate global understanding of AI and foster a community of responsible developers.',
+    icon: 'book',
+  },
+];
+
+const stats = [
+  { value: '120+', label: 'Research papers published' },
+  { value: '80K+', label: 'Active developers' },
+  { value: '99.9%', label: 'API uptime SLA' },
+  { value: '40+', label: 'Countries served' },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body class="bg-white text-slate-800">
-		<Header />
-		<main>
-			<Hero />
+<MainLayout
+  title="AI Research & Safety"
+  description="AXEROAI is an AI safety company building reliable, interpretable, and steerable AI systems for the long-term benefit of humanity."
+>
+  <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+  <section
+    class="relative min-h-[92vh] flex items-center justify-center pt-16 pb-20 overflow-hidden"
+    aria-labelledby="hero-heading"
+  >
+    <!-- Dot-grid background -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background-image: radial-gradient(circle, #1F2937 1px, transparent 1px); background-size: 32px 32px; opacity: 0.4;"
+      aria-hidden="true"
+    ></div>
 
-			<section class="reveal mx-auto max-w-6xl px-6 pb-16 text-center lg:px-10">
-				<p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">From India. For the World.</p>
-			</section>
+    <!-- Radial glow -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none"
+      style="background: radial-gradient(ellipse at center, rgba(79,70,229,0.06) 0%, transparent 65%);"
+      aria-hidden="true"
+    ></div>
 
-			<section class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-2 lg:px-10">
-				<div>
-					<p class="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">About Axero AI</p>
-					<h2 class="mb-5 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">An India-first vision for trusted intelligence.</h2>
-				</div>
-				<p class="text-lg leading-relaxed text-slate-600">
-					Axero AI is building a sovereign and open AI foundation that empowers Indian institutions, businesses, and developers to innovate with confidence. We are creating independent systems that are globally competitive, secure by design, and built for long-term impact.
-				</p>
-			</section>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Eyebrow badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand/25 bg-brand/8 mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand" style="box-shadow: 0 0 6px #4F46E5;" aria-hidden="true"></span>
+        <span class="text-xs font-medium text-brand tracking-wide font-display">Frontier AI Research</span>
+      </div>
 
-			<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
-				<div class="rounded-3xl border border-slate-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-8 sm:p-12">
-					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Vision</p>
-					<h2 class="mb-6 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Reimagining India's AI Future</h2>
-					<ul class="grid gap-4 text-slate-700 sm:grid-cols-3">
-						<li class="rounded-2xl border border-indigo-100 bg-white/80 p-4">Building indigenous LLM models</li>
-						<li class="rounded-2xl border border-indigo-100 bg-white/80 p-4">Reducing dependency on foreign AI</li>
-						<li class="rounded-2xl border border-indigo-100 bg-white/80 p-4">Creating scalable infrastructure</li>
-					</ul>
-				</div>
-			</section>
+      <!-- Headline -->
+      <h1
+        id="hero-heading"
+        class="font-display font-extrabold text-5xl sm:text-6xl lg:text-[4.5rem] text-text-primary leading-[1.08] tracking-tight mb-6"
+      >
+        AI research and products<br />
+        that put safety<br />
+        <span class="text-brand">at the frontier</span>
+      </h1>
 
-			<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10" id="features">
-				<div class="mb-8">
-					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Capabilities</p>
-					<h2 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Platform features built for scale and trust.</h2>
-				</div>
-				<FeatureCards />
-			</section>
+      <!-- Sub-headline -->
+      <p class="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto mb-10">
+        AXEROAI is an AI safety company working to build reliable, interpretable,
+        and steerable AI systems for the long-term benefit of humanity.
+      </p>
 
-			<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
-				<div class="mb-8">
-					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">How it works</p>
-					<h2 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Build. Train. Scale.</h2>
-				</div>
-				<div class="grid gap-6 md:grid-cols-3">
-					{['Build', 'Train', 'Scale'].map((step, index) => (
-						<div class="rounded-2xl border border-slate-200 bg-white p-6">
-							<div class="mb-3 text-sm font-semibold text-indigo-600">0{index + 1}</div>
-							<h3 class="text-2xl font-semibold text-slate-900">{step}</h3>
-							<p class="mt-2 text-sm text-slate-600">A focused execution layer designed for high-quality AI lifecycle delivery.</p>
-						</div>
-					))}
-				</div>
-			</section>
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="#"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-brand hover:bg-brand-hover text-white font-medium text-sm rounded-xl transition-all"
+          style="box-shadow: 0 0 20px rgba(79,70,229,0.25);"
+        >
+          Get started
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a
+          href="/news"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-card-border hover:border-text-muted text-text-secondary hover:text-text-primary font-medium text-sm rounded-xl transition-colors"
+        >
+          Explore News
+        </a>
+      </div>
 
-			<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
-				<div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-					<div>
-						<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Latest updates</p>
-						<h2 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Insights from the Axero AI newsroom.</h2>
-					</div>
-					<a href="/news" class="text-sm font-semibold text-indigo-600 transition hover:text-indigo-800">View All Updates →</a>
-				</div>
-				<div class="grid gap-5 md:grid-cols-3">
-					{
-						posts.map((post) => (
-							<a href={`/news/${post.id}/`} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,23,42,0.08)]">
-								<p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"><FormattedDate date={post.data.pubDate} /></p>
-								<h3 class="mb-3 text-xl font-semibold text-slate-900">{post.data.title}</h3>
-								<p class="text-sm text-slate-600">{post.data.description}</p>
-							</a>
-						))
-					}
-				</div>
-			</section>
+      <!-- Trust row -->
+      <div class="mt-14 flex flex-wrap items-center justify-center gap-6">
+        {[
+          'SOC 2 Type II certified',
+          'Open research culture',
+          'Enterprise ready',
+        ].map((item) => (
+          <span class="flex items-center gap-2 text-xs text-text-muted">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#22C55E" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="#22C55E" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            </svg>
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
 
-			<section class="reveal mx-auto max-w-6xl px-6 pb-24 pt-8 lg:px-10">
-				<div class="rounded-3xl border border-slate-200 bg-slate-950 px-8 py-12 text-center sm:px-12">
-					<h2 class="mb-3 text-3xl font-semibold text-white sm:text-4xl">Be part of the AI revolution</h2>
-					<p class="mx-auto mb-8 max-w-2xl text-slate-300">Join builders, learners, and leaders shaping a global AI ecosystem from India.</p>
-					<div class="flex flex-wrap justify-center gap-4">
-						<a href="/news" class="rounded-full bg-white px-7 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">Explore Updates</a>
-						<a href="/about" class="rounded-full border border-slate-600 px-7 py-3 text-sm font-semibold text-white transition hover:border-slate-400">Join Now</a>
-					</div>
-				</div>
-			</section>
-		</main>
-		<Footer />
-		<script is:inline>
-			const observer = new IntersectionObserver(
-				(entries) => {
-					for (const entry of entries) {
-						if (entry.isIntersecting) {
-							entry.target.classList.add('show');
-							observer.unobserve(entry.target);
-						}
-					}
-				},
-				{ threshold: 0.16 },
-			);
-			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-		</script>
-	</body>
-</html>
+  <!-- ═════════════════════ IMPACT / HIGHLIGHT ══════════════════════════ -->
+  <section class="py-16 sm:py-20" aria-labelledby="impact-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="border border-card-border rounded-2xl overflow-hidden bg-card">
+        <div class="grid md:grid-cols-2">
+          <!-- Text side -->
+          <div class="p-8 sm:p-12">
+            <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">
+              Research Insight
+            </span>
+            <h2
+              id="impact-heading"
+              class="font-display font-bold text-3xl sm:text-4xl text-text-primary leading-tight mb-4"
+            >
+              What 81,000 people want from AI
+            </h2>
+            <p class="text-text-secondary leading-relaxed mb-6">
+              We surveyed over 81,000 individuals across 30 countries to understand how people want AI
+              to shape their lives, work, and society. The results reveal nuanced expectations and
+              deep concerns that should guide responsible AI development.
+            </p>
+            <a
+              href="/news"
+              class="inline-flex items-center gap-2 text-sm font-medium text-brand hover:text-brand-hover transition-colors group"
+            >
+              Read the research
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                class="transition-transform group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Stats side -->
+          <div class="bg-background border-t md:border-t-0 md:border-l border-card-border p-8 sm:p-12 flex items-center">
+            <div class="w-full max-w-sm space-y-5">
+              {[
+                { label: 'Want AI to augment, not replace jobs', pct: 87 },
+                { label: 'Prioritize transparency in AI decisions', pct: 73 },
+                { label: 'Support independent safety regulations', pct: 91 },
+                { label: 'Trust AI-generated content with caveats', pct: 58 },
+              ].map((item) => (
+                <div>
+                  <div class="flex justify-between text-xs mb-1.5">
+                    <span class="text-text-secondary">{item.label}</span>
+                    <span class="text-text-primary font-semibold font-display">{item.pct}%</span>
+                  </div>
+                  <div class="h-1 bg-card-border rounded-full overflow-hidden">
+                    <div
+                      class="h-full bg-brand rounded-full"
+                      style={`width:${item.pct}%`}
+                      role="progressbar"
+                      aria-valuenow={item.pct}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={item.label}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ LATEST RELEASES ════════════════════════════ -->
+  <section class="py-16 sm:py-20" aria-labelledby="releases-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-10">
+        <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-2 block">
+          Latest
+        </span>
+        <h2 id="releases-heading" class="font-display font-bold text-3xl text-text-primary">
+          Recent releases
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {releases.map((item) => (
+          <article class="group bg-card border border-card-border rounded-xl p-6 hover:border-brand/35 transition-colors flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20">
+                {item.category}
+              </span>
+              <time class="text-xs text-text-muted" datetime={item.date}>{item.date}</time>
+            </div>
+            <h3 class="font-display font-semibold text-text-primary text-lg leading-snug mb-3 group-hover:text-brand transition-colors">
+              {item.title}
+            </h3>
+            <p class="text-sm text-text-muted leading-relaxed mb-5 flex-1">{item.description}</p>
+            <a
+              href={item.href}
+              class="inline-flex items-center gap-1.5 text-xs font-medium text-text-secondary hover:text-brand transition-colors group/link"
+              aria-label={`Read more about ${item.title}`}
+            >
+              Read more
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                class="transition-transform group-hover/link:translate-x-0.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ CORE VALUES ═══════════════════════════════ -->
+  <section
+    class="py-20 sm:py-24 border-y border-card-border"
+    aria-labelledby="values-heading"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">
+          Our Mission
+        </span>
+        <h2 id="values-heading" class="font-display font-bold text-3xl sm:text-4xl text-text-primary mb-4">
+          Building AI that benefits everyone
+        </h2>
+        <p class="text-text-secondary leading-relaxed">
+          We're committed to developing AI that is safe, beneficial, and trustworthy — advancing
+          the frontier while keeping humanity's long-term interests at the core.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- AI Safety card -->
+        <div class="bg-card border border-card-border rounded-xl p-6 hover:border-brand/30 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-4" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-text-primary mb-2">AI Safety</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            We invest heavily in alignment research and red-teaming to ensure our models behave as intended — even in adversarial conditions.
+          </p>
+        </div>
+
+        <!-- Responsible Scaling -->
+        <div class="bg-card border border-card-border rounded-xl p-6 hover:border-brand/30 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-4" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M3 6h18M3 12h18M3 18h18" />
+              <circle cx="6" cy="6" r="1" fill="currentColor" />
+              <circle cx="12" cy="12" r="1" fill="currentColor" />
+              <circle cx="18" cy="18" r="1" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-text-primary mb-2">Responsible Scaling</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            Our Responsible Scaling Policy defines clear capability thresholds and required safety measures before any deployment decision.
+          </p>
+        </div>
+
+        <!-- Alignment Research -->
+        <div class="bg-card border border-card-border rounded-xl p-6 hover:border-brand/30 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-4" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <circle cx="12" cy="12" r="3" />
+              <circle cx="12" cy="12" r="8" strokeDasharray="2 3" />
+              <circle cx="12" cy="12" r="11" strokeOpacity="0.3" />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-text-primary mb-2">Alignment Research</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            We publish cutting-edge research on making AI systems reliably aligned with human intentions and broader societal values.
+          </p>
+        </div>
+
+        <!-- Education -->
+        <div class="bg-card border border-card-border rounded-xl p-6 hover:border-brand/30 transition-colors">
+          <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand mb-4" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-text-primary mb-2">Education & Innovation</h3>
+          <p class="text-sm text-text-muted leading-relaxed">
+            We share our research freely to accelerate global understanding of AI and foster a worldwide community of responsible builders.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ STATS ════════════════════════════════ -->
+  <section class="py-16 sm:py-20" aria-label="Key statistics">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-card-border rounded-2xl overflow-hidden border border-card-border">
+        {stats.map((stat) => (
+          <div class="bg-background px-6 py-10 text-center">
+            <div class="font-display font-extrabold text-4xl sm:text-5xl text-text-primary mb-2">
+              {stat.value}
+            </div>
+            <div class="text-sm text-text-muted">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FAQ ══════════════════════════════════ -->
+  <section class="py-16 sm:py-20" aria-labelledby="faq-heading">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-3 block">
+          FAQ
+        </span>
+        <h2 id="faq-heading" class="font-display font-bold text-3xl text-text-primary">
+          Frequently asked questions
+        </h2>
+      </div>
+      <FAQ client:load />
+    </div>
+  </section>
+
+  <!-- ══════════════════════ FINAL CTA ══════════════════════════════════ -->
+  <section class="py-16 sm:py-24" aria-labelledby="cta-heading">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="relative bg-card border border-card-border rounded-2xl p-12 sm:p-16 overflow-hidden">
+        <!-- Top accent line -->
+        <div
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 pointer-events-none"
+          style="background: linear-gradient(to bottom, transparent, rgba(79,70,229,0.5));"
+          aria-hidden="true"
+        ></div>
+
+        <span class="text-xs font-semibold font-display text-brand uppercase tracking-widest mb-4 block">
+          Get Involved
+        </span>
+        <h2
+          id="cta-heading"
+          class="font-display font-extrabold text-4xl sm:text-5xl text-text-primary mb-4 leading-tight"
+        >
+          Build with AXEROAI
+        </h2>
+        <p class="text-lg text-text-secondary mb-8 max-w-xl mx-auto leading-relaxed">
+          Join thousands of developers and researchers using AXEROAI to build the next generation
+          of intelligent, responsible applications.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="#"
+            class="w-full sm:w-auto px-8 py-3.5 bg-brand hover:bg-brand-hover text-white rounded-xl font-medium transition-all text-sm"
+            style="box-shadow: 0 0 20px rgba(79,70,229,0.2);"
+          >
+            Start building
+          </a>
+          <a
+            href="#"
+            class="w-full sm:w-auto px-8 py-3.5 border border-card-border hover:border-text-muted text-text-secondary hover:text-text-primary rounded-xl font-medium transition-colors text-sm"
+          >
+            Join the mission
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

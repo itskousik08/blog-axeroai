@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+  <section class="min-h-[80vh] flex items-center justify-center pt-16">
+    <div class="text-center px-4">
+      <p class="font-display text-8xl font-extrabold text-brand/20 mb-4 select-none" aria-hidden="true">404</p>
+      <h1 class="font-display font-bold text-3xl text-text-primary mb-3">Page not found</h1>
+      <p class="text-text-secondary mb-8 max-w-md mx-auto">
+        The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/"
+          class="px-6 py-3 bg-brand hover:bg-brand-hover text-white rounded-xl font-medium text-sm transition-colors"
+        >
+          Go home
+        </a>
+        <a
+          href="/blog"
+          class="px-6 py-3 border border-card-border hover:border-text-muted text-text-secondary hover:text-text-primary rounded-xl font-medium text-sm transition-colors"
+        >
+          Read the blog
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
