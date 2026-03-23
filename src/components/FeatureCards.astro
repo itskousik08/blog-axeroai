@@ -1,0 +1,46 @@
+---
+const features = [
+	{
+		title: 'Indigenous AI Models',
+		description: 'Purpose-built language and multimodal models adapted for Indian users and enterprises.',
+		icon: '◎',
+	},
+	{
+		title: 'AI Productivity Tools',
+		description: 'Secure copilots that improve execution speed for teams across operations, support, and research.',
+		icon: '◌',
+	},
+	{
+		title: 'Intelligent Knowledge Systems',
+		description: 'Unified context layers that connect documents, workflows, and decisions in real time.',
+		icon: '◍',
+	},
+	{
+		title: 'Real-time Learning Platforms',
+		description: 'Adaptive learning engines that personalize training, onboarding, and capability building.',
+		icon: '◉',
+	},
+	{
+		title: 'Scalable AI Infrastructure',
+		description: 'Reliable deployment stack designed for scale, governance, and long-term resilience.',
+		icon: '◈',
+	},
+	{
+		title: 'Developer-first APIs',
+		description: 'Composable APIs and SDKs for fast experimentation, integration, and production rollout.',
+		icon: '◊',
+	},
+];
+---
+
+<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+	{
+		features.map((feature) => (
+			<article class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_14px_40px_rgba(99,102,241,0.12)]">
+				<div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-indigo-50 text-lg text-indigo-600">{feature.icon}</div>
+				<h3 class="mb-2 text-xl font-semibold text-slate-900">{feature.title}</h3>
+				<p class="text-sm leading-relaxed text-slate-600">{feature.description}</p>
+			</article>
+		))
+	}
+</div>
