@@ -1,50 +1,113 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<Hero />
+
+	<section class="reveal mx-auto max-w-6xl px-6 pb-16 text-center lg:px-10">
+		<p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">From India. For the World.</p>
+	</section>
+
+	<section class="reveal mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-2 lg:px-10">
+		<div>
+			<p class="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">About Axero AI</p>
+			<h2 class="mb-5 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">An India-first vision for trusted intelligence.</h2>
+		</div>
+		<p class="text-lg leading-relaxed text-slate-600">
+			Axero AI is building a sovereign and open AI foundation that empowers Indian institutions, businesses, and developers to innovate with confidence. We are creating independent systems that are globally competitive, secure by design, and built for long-term impact.
+		</p>
+	</section>
+
+	<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
+		<div class="rounded-3xl border border-slate-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-8 shadow-lg sm:p-12">
+			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Vision</p>
+			<h2 class="mb-6 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Reimagining India's AI Future</h2>
+			<ul class="grid gap-4 text-slate-700 sm:grid-cols-3">
+				<li class="rounded-xl border border-indigo-100 bg-white/80 p-4">Building indigenous LLM models</li>
+				<li class="rounded-xl border border-indigo-100 bg-white/80 p-4">Reducing dependency on foreign AI</li>
+				<li class="rounded-xl border border-indigo-100 bg-white/80 p-4">Creating scalable infrastructure</li>
 			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+		</div>
+	</section>
+
+	<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10" id="features">
+		<div class="mb-8">
+			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Capabilities</p>
+			<h2 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Platform features built for scale and trust.</h2>
+		</div>
+		<FeatureCards />
+	</section>
+
+	<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
+		<div class="mb-8">
+			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">How it works</p>
+			<h2 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Build. Train. Scale.</h2>
+		</div>
+		<div class="grid gap-6 md:grid-cols-3">
+			{['Build', 'Train', 'Scale'].map((step, index) => (
+				<div class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg">
+					<div class="mb-3 text-sm font-semibold text-indigo-600">0{index + 1}</div>
+					<h3 class="text-2xl font-semibold text-slate-900">{step}</h3>
+					<p class="mt-2 text-sm text-slate-600">A focused execution layer designed for high-quality AI lifecycle delivery.</p>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<section class="reveal mx-auto max-w-6xl px-6 py-16 lg:px-10">
+		<div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<p class="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Latest updates</p>
+				<h2 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Insights from the Axero AI newsroom.</h2>
+			</div>
+			<a href="/news" class="text-sm font-semibold text-indigo-600 transition hover:text-indigo-800">View All Updates →</a>
+		</div>
+		<div class="grid gap-5 md:grid-cols-3">
+			{
+				posts.map((post) => (
+					<a href={`/news/${post.id}/`} class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg transition hover:-translate-y-1">
+						<p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"><FormattedDate date={post.data.pubDate} /></p>
+						<h3 class="mb-3 text-2xl font-semibold text-slate-900">{post.data.title}</h3>
+						<p class="text-sm text-slate-600">{post.data.description}</p>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="reveal mx-auto max-w-6xl px-6 pb-24 pt-8 lg:px-10">
+		<div class="rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-12 text-center shadow-lg sm:px-12">
+			<h2 class="mb-3 text-4xl font-semibold text-white sm:text-5xl">Be part of the AI revolution</h2>
+			<p class="mx-auto mb-8 max-w-2xl text-slate-100">Join builders, learners, and leaders shaping a global AI ecosystem from India.</p>
+			<div class="flex flex-wrap justify-center gap-4">
+				<a href="/news" class="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">Explore Updates</a>
+				<a href="/about" class="rounded-lg border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Join Now</a>
+			</div>
+		</div>
+	</section>
+
+	<script is:inline>
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('show');
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.16 },
+		);
+		document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+	</script>
+</Layout>
