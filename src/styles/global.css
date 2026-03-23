@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,6 +18,7 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 
 :root {
 	color-scheme: light;
@@ -88,4 +90,135 @@ a { text-decoration: none; }
 .sr-only {
 	border: 0; padding: 0; margin: 0; position: absolute !important; height: 1px; width: 1px; overflow: hidden;
 	clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); white-space: nowrap;
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	background: #ffffff;
+	color: #0f172a;
+}
+
+#site-header {
+	background: rgba(255, 255, 255, 0.82);
+	backdrop-filter: blur(0px);
+}
+
+#site-header.nav-scrolled {
+	backdrop-filter: blur(12px);
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.reveal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.ticker {
+	display: grid;
+	overflow: hidden;
+	height: 1.75rem;
+}
+
+.ticker > span {
+	grid-area: 1 / 1;
+	animation: slideWords 9s infinite;
+}
+
+.ticker > span:nth-child(2) {
+	animation-delay: 3s;
+}
+
+.ticker > span:nth-child(3) {
+	animation-delay: 6s;
+}
+
+@keyframes slideWords {
+	0%,
+	20% {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	25%,
+	45% {
+		opacity: 1;
+		transform: translateY(0%);
+	}
+	55%,
+	100% {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+}
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+.animate-float {
+	animation: float 7s ease-in-out infinite;
+}
+
+.animate-float-slow {
+	animation: float 10s ease-in-out infinite;
+}
+
+.motion-safe\:animate-fade-up {
+	animation: fadeUp 0.8s ease-out;
+}
+
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.prose a {
+	color: #4f46e5;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+	color: #0f172a;
+	margin-top: 2rem;
+}
+
+.prose p,
+.prose li {
+	color: #334155;
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+
 }

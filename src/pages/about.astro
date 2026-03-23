@@ -1,4 +1,4 @@
----
+
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -11,3 +11,29 @@ import Layout from '../layouts/Layout.astro';
 		<p>We operate with a long-term lens: public-good innovation, developer empowerment, enterprise-grade systems, and a global ambition anchored in Indian excellence.</p>
 	</div>
 </Layout>
+
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="About | Axero AI" description="Learn about Axero AI's mission to build India's AI future." />
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto max-w-4xl px-6 pb-24 pt-40 lg:px-10">
+			<p class="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">About</p>
+			<h1 class="mb-8 text-5xl font-semibold tracking-tight text-slate-950">Building an independent intelligence ecosystem.</h1>
+			<div class="space-y-6 text-lg leading-relaxed text-slate-600">
+				<p>Axero AI is focused on accelerating India’s AI capability with indigenous research, scalable infrastructure, and responsible deployment standards.</p>
+				<p>Our mission is to reduce structural dependency on external AI ecosystems by developing high-trust models and products tuned for regional and global relevance.</p>
+				<p>We operate with a long-term lens: public-good innovation, developer empowerment, enterprise-grade systems, and a global ambition anchored in Indian excellence.</p>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
