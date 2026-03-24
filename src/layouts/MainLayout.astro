@@ -1,0 +1,119 @@
+---
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
+import CookieBanner from '../components/CookieBanner.jsx';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: string;
+}
+
+const {
+  title,
+  description = 'AXEROAI — AI research and products that put safety at the frontier of human innovation.',
+  image = '/images/og-default.png',
+  canonical,
+  type = 'website',
+} = Astro.props;
+
+const siteUrl = 'https://axeroai.com';
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta -->
+    <title>{title} | AXEROAI</title>
+    <meta name="title" content={`${title} | AXEROAI`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="AXEROAI" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="AXEROAI" />
+    <meta property="og:title" content={`${title} | AXEROAI`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@axeroai" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={`${title} | AXEROAI`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Fonts preload -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#0B0F14" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AXEROAI",
+        "url": "https://axeroai.com",
+        "logo": "https://axeroai.com/favicon.svg",
+        "description": "AI research and products that put safety at the frontier.",
+        "sameAs": [
+          "https://twitter.com/axeroai",
+          "https://github.com/axeroai",
+          "https://linkedin.com/company/axeroai"
+        ]
+      }
+    </script>
+  </head>
+
+  <body class="bg-background text-text-primary font-sans antialiased min-h-screen">
+    <!-- Skip navigation links -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-white"
+    >
+      Skip to main content
+    </a>
+    <a
+      href="#footer"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-44 focus:z-[9999] focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-white"
+    >
+      Skip to footer
+    </a>
+
+    <Header client:load />
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer />
+    <CookieBanner client:load />
+  </body>
+</html>
